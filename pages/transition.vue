@@ -1,5 +1,7 @@
 <template>
-  <div class="flex flex-col items-center py-16">
+  <div
+    class="w-screen h-screen pt-12 flex flex-col items-center gap-4 bg-gradient-to-r to-indigo-500 from-purple-500"
+  >
     <div class="w-32 h-32">
       <TransitionRoot
         appear

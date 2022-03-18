@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="w-screen h-screen flex flex-col items-center justify-center gap-4"
-  >
+  <div class="w-screen h-screen pt-12 flex flex-col items-center gap-4">
     <div class="w-full px-4 pt-16">
       <div class="w-full max-w-md p-2 mx-auto bg-white rounded-2xl">
         <Disclosure v-slot="{ open }">

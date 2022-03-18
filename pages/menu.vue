@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="w-screen h-screen flex flex-col items-center justify-center gap-4"
-  >
+  <div class="w-screen h-screen pt-12 flex flex-col items-center gap-4">
     <div class="w-56">
       <Menu as="div" class="relative inline-block text-left">
         <div>

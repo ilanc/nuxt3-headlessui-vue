@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import "./assets/tailwind.css";
+import "./assets/css/tailwind.css";
 </script>

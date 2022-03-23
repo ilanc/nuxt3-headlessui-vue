@@ -1,5 +1,9 @@
 # Headlessui/vue & Nuxt3
 
+disucssion:
+
+- https://github.com/nuxt/framework/discussions/3789
+
 ## setup
 
 ```sh
@@ -51,4 +55,53 @@ result = `document is not defined`
  ERROR  [proxy] connect ENOENT /tmp/nitro/worker-9459-1.sock                                                                                                                                                                                                              13:21:54
 
   at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1157:16)
+```
+
+## error
+
+- only if page-reload & dialog open on start
+- error inside @headlessui/vue
+  - https://github.com/tailwindlabs/headlessui/pull/1158
+  - /code/web/tailwind/headlessui/packages/@headlessui-vue/src/components/dialog/dialog.ts
+  - /code/web/tailwind/headlessui/packages/@headlessui-vue/src/components/portal/portal.ts
+  - dialog and portal using owner
+- notes
+  - /code/web/tailwind/headlessui/packages/@headlessui-vue/dist/headlessui.esm.js
+  - built into server.mjs
+    - /code/web/nuxt/8-headlessui-vue/.nuxt/dist/server/server.mjs
+
+## build custom @headlessui/vue
+
+```sh
+# link
+/code/web/nuxt/8-headlessui-vue
+mv node_modules/@headlessui/vue node_modules/@headlessui/vue2
+ln -s /code/web/tailwind/headlessui/packages/@headlessui-vue node_modules/@headlessui/vue
+
+# build prod (minified)
+pushd /code/web/tailwind/headlessui/packages/@headlessui-vue && yarn build && popd
+
+# or build non-minified
+pushd /code/web/tailwind/headlessui/packages/@headlessui-vue && ../../node_modules/.bin/esbuild ./src/index.ts --format=esm --outfile=./dist/headlessui.esm.js --sourcemap --bundle --platform=browser --target=es2020 --external:vue && popd
+
+# and fix non-minified = manually remove vue duplicates:
+code /code/web/nuxt/8-headlessui-vue/node_modules/@headlessui/vue/dist/headlessui.esm.js
+# rm from "vue" imports:
+# - inject, provide
+# - ref, onMounted, watchEffect
+# - defineComponent
+# - unref
+```
+
+## solution
+
+- only open dialog in `onMounted()`
+
+```ts
+// const isOpen = ref(true);
+const isOpen = ref(false);
+
+onMounted(() => {
+  isOpen.value = true;
+});
 ```

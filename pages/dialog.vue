@@ -83,7 +83,12 @@ import {
   DialogTitle,
 } from "@headlessui/vue";
 
-const isOpen = ref(true);
+// const isOpen = ref(true);
+const isOpen = ref(false);
+
+onMounted(() => {
+  isOpen.value = true;
+});
 
 function closeModal() {
   isOpen.value = false;
